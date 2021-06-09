@@ -1,0 +1,17 @@
+<?php
+if (isset($_GET["ip"])) {
+    $ports = array(21, 22, 23, 25, 53, 80, 443, 3306);
+    foreach ($ports as $port) {
+        $service = getservbyport($port, "tcp");
+        if($pf = @fsockopen($_GET["ip"], $port, $err, $err_string, 1)) {
+            echo "Port $port($service)" . ": <span style='color:green'>Open</span><br>";
+            fclose($pf);
+        }
+        else {
+            echo "Port $port($service)" . ": <span style='color:red'>Inaccessible</span><br>";
+        }
+
+    }
+}
+
+?>
